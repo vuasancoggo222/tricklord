@@ -30,21 +30,21 @@ const getFbDownload = async () => {
     ElNotification({
       title: "Error",
       type: "error",
-      message: data.error ?  `${data.error}` :  `${data.message}`,
+      message: data.error ?  `Lỗi: Video ở chế độ riêng tư hoặc hiện không có sẵn.` :  `${data.message}`,
     });
   }
   else{
     ElNotification({
       title: "Success",
       type: "success",
-      message: `Get video successfully`,
+      message: `Lấy link tải xuống thành công.`,
     });
   }
   if (!data) {
     ElNotification({
       title: data,
       type: "error",
-      message: `Cannot find video or reel !!`,
+      message: `Không tìm thấy video !!`,
     });
   }
  

@@ -10,7 +10,7 @@ const headers = {
 };
 const getFbDownload = async () => {
   watchData.value = null;
-  if(!url.value){
+  if (!url.value) {
     ElNotification({
       title: "Error",
       type: "error",
@@ -30,10 +30,11 @@ const getFbDownload = async () => {
     ElNotification({
       title: "Error",
       type: "error",
-      message: data.error ?  `Lỗi: Video ở chế độ riêng tư hoặc hiện không có sẵn.` :  `${data.message}`,
+      message: data.error
+        ? `Lỗi: Video ở chế độ riêng tư hoặc hiện không có sẵn.`
+        : `${data.message}`,
     });
-  }
-  else{
+  } else {
     ElNotification({
       title: "Success",
       type: "success",
@@ -47,7 +48,7 @@ const getFbDownload = async () => {
       message: `Không tìm thấy video !!`,
     });
   }
- 
+
   loading.close();
 };
 </script>
@@ -55,18 +56,52 @@ const getFbDownload = async () => {
 <template>
   <div>
     <div>
-      <span v-if="isSubmit">
-        Trạng thái :{{ watchData?.success ? "Thành công" : "Thất bại" }}</span
+      <el-tag class="mb-10" size="large"
+        ><h2>Tải video & reel Facebook</h2></el-tag
       >
-      <el-input v-model="url" />
-      <el-button @click="getFbDownload">Submit</el-button>
+      <el-row :gutter="20" class="mb-10" justify="center">
+        <el-col :span="16">
+          <el-input
+            v-model="url"
+            size="large"
+            placeholder="Nhập URL..."
+            :suffix-icon="Search"
+          />
+        </el-col>
+        <el-col :span="8">
+          <el-button type="primary" size="large" @click="getFbDownload"
+            >Lấy link</el-button
+          >
+        </el-col>
+      </el-row>
+      <div class="mb-10">
+        <el-text v-if="isSubmit">
+          Trạng thái :{{
+            watchData?.success ? "Thành công" : "Thất bại"
+          }}</el-text
+        >
+      </div>
+      <br />
       <template v-if="watchData">
-        <h1>{{ watchData.title }}</h1>
-        <div v-for="(link, index) in watchData.links">
-          <span>{{ index }}</span> : <a :href="link"> {{ link }}</a>
-          <br/>
-        </div>
+        <el-tag class="mb-10" type="primary"
+          ><h3>{{ watchData.title }}</h3></el-tag
+        >
+        <el-row class="mb-10" v-for="(link, index) in watchData.links">
+          <el-col>
+            <el-button
+              ><el-link :underline="false" :href="link">
+                {{ index }}</el-link
+              ></el-button
+            >
+          </el-col>
+        </el-row>
       </template>
     </div>
   </div>
 </template>
+
+<style>
+.mb-10 {
+  margin-bottom: 10px;
+}
+</style>

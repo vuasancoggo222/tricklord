@@ -8,3 +8,4 @@ export const useCustomFetch = async (apiUrl : string, query : {}, headers : {},)
       ).catch((error) => error.data);
       return data;
 }
+

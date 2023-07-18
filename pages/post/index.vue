@@ -10,6 +10,14 @@ const headers = {
 };
 const getFbDownload = async () => {
   watchData.value = null;
+  if(!url.value){
+    ElNotification({
+      title: "Error",
+      type: "error",
+      message: `Không được để trống url.`,
+    });
+    return;
+  }
   const loading = ElLoading.service({
     lock: true,
     text: "Loading",
@@ -18,11 +26,18 @@ const getFbDownload = async () => {
   const data = await useCustomFetch(api, { url: url.value }, headers);
   watchData.value = data;
   isSubmit.value = true;
-  if (data.error) {
+  if (!data.success) {
     ElNotification({
       title: "Error",
       type: "error",
-      message: `${data.error}`,
+      message: data.error ?  `${data.error}` :  `${data.message}`,
+    });
+  }
+  else{
+    ElNotification({
+      title: "Success",
+      type: "success",
+      message: `Get video successfully`,
     });
   }
   if (!data) {
@@ -32,13 +47,7 @@ const getFbDownload = async () => {
       message: `Cannot find video or reel !!`,
     });
   }
-  if (data) {
-    ElNotification({
-      title: "Success",
-      type: "success",
-      message: `Get video successfully`,
-    });
-  }
+ 
   loading.close();
 };
 </script>

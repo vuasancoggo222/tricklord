@@ -2,14 +2,15 @@
 const url = ref("");
 const watchData = ref();
 const isSubmit = ref(false);
-const api =
-  "https://facebook-reel-and-video-downloader.p.rapidapi.com/app/main.php";
-const headers = {
-  "X-RapidAPI-Key": "4649d21271msh0897a9f11f44a47p128308jsnb81e33b7b69a",
-  "X-RapidAPI-Host": "facebook-reel-and-video-downloader.p.rapidapi.com",
-};
 const getFbDownload = async () => {
   watchData.value = null;
+  const params = { url: url.value };
+  const api =
+    "https://facebook-reel-and-video-downloader.p.rapidapi.com/app/main.php";
+  const headers = {
+    "X-RapidAPI-Key": "4649d21271msh0897a9f11f44a47p128308jsnb81e33b7b69a",
+    "X-RapidAPI-Host": "facebook-reel-and-video-downloader.p.rapidapi.com",
+  };
   if (!url.value) {
     ElNotification({
       title: "Error",
@@ -18,21 +19,14 @@ const getFbDownload = async () => {
     });
     return;
   }
-  const loading = ElLoading.service({
-    lock: true,
-    text: "Loading",
-    background: "rgba(0, 0, 0, 0.7)",
-  });
-  const data = await useCustomFetch(api, { url: url.value }, headers);
-  watchData.value = data;
+  const { data } = await useCustomFetch(api, params, headers);
+  watchData.value = data.value;
   isSubmit.value = true;
-  if (!data.success) {
+  if (!data.value.success) {
     ElNotification({
       title: "Error",
       type: "error",
-      message: data.error
-        ? `Lỗi: Video ở chế độ riêng tư hoặc hiện không có sẵn.`
-        : `${data.message}`,
+      message:  `Lỗi: Video ở chế độ riêng tư hoặc hiện không có sẵn.`
     });
   } else {
     ElNotification({
@@ -41,15 +35,13 @@ const getFbDownload = async () => {
       message: `Lấy link tải xuống thành công.`,
     });
   }
-  if (!data) {
+  if (!data.value) {
     ElNotification({
       title: data,
       type: "error",
       message: `Không tìm thấy video !!`,
     });
   }
-
-  loading.close();
 };
 </script>
 
@@ -86,6 +78,9 @@ const getFbDownload = async () => {
         <el-tag class="mb-10" type="primary"
           ><h3>{{ watchData.title }}</h3></el-tag
         >
+        <div class="mb-10">
+          <el-image  :src="watchData.thumbnail" lazy />
+        </div>
         <el-row class="mb-10" v-for="(link, index) in watchData.links">
           <el-col>
             <el-button

@@ -1,19 +1,10 @@
 
 <template>
-  <div>
-    <Head>
-      <Title>Home</Title>
-      <Meta name="description" content="Home" />
-    </Head>
-    <el-button >{{ foo }}</el-button>
-  <ElButton :icon="ElIconEditPen" type="success">button</ElButton>
-  <LazyElButton type="warning">lazzy button</LazyElButton>
-  </div>
-  <ContentDoc />
+     <el-button  size="large" type="primary" @click="$router.push('/facebook-download')">Tải Xuống Facebook Reel & Video</el-button>
 </template>
 
 <script setup>
-const foo = useFoo('trick-lor')
+
 useHead({
   title: 'Home page',
 })

@@ -1,4 +1,7 @@
 <script setup>
+definePageMeta({
+  title: 'Tải video & reel Facebook'
+})
 const url = ref("");
 const watchData = ref();
 const isSubmit = ref(false);
@@ -48,9 +51,6 @@ const getFbDownload = async () => {
 <template>
   <div>
     <div>
-      <el-tag class="mb-10" size="large"
-        ><h2>Tải video & reel Facebook</h2></el-tag
-      >
       <el-row :gutter="20" class="mb-10" justify="center">
         <el-col :span="16">
           <el-input

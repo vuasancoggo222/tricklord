@@ -17,7 +17,7 @@
     "nuxt": "^3.6.3"
   },
   "dependencies": {
-    "@nuxtjs/color-mode": "^3.3.0",
+    "@nuxtjs/color-mode": "^3.3.3",
     "@nuxtjs/robots": "^3.0.0",
     "@pinia/nuxt": "^0.4.11",
     "@sidebase/nuxt-pdf": "^0.1.1",
